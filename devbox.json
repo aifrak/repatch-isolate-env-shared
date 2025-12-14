@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.3/.schema/devbox.schema.json",
+  "packages": {
+    "postgresql": "16.4",
+    "erlang": "27.2",
+    "mise": "2025.11.11",
+    "inotify-tools": {
+      "version": "4.23.9.0",
+      "platforms": ["x86_64-linux", "aarch64-linux"]
+    },
+    "shellcheck": "0.10.0",
+    "shfmt": "3.10.0",
+    "unzip": "6.0"
+  },
+  "shell": {
+    "init_hook": [". scripts/mise/init.sh", "devbox services restart"]
+  }
+}
