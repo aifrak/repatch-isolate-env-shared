@@ -1,11 +1,17 @@
 defmodule HelloWorldWeb.ProductLiveTest do
   use HelloWorldWeb.ConnCase
+  use Repatch.ExUnit, assert_expectations: true, isolate_env: :shared
 
   import Phoenix.LiveViewTest
   import HelloWorld.ProductsFixtures
+  import Repatch.Expectations
 
   @create_attrs %{name: "some name", description: "some description", price: 120.5}
-  @update_attrs %{name: "some updated name", description: "some updated description", price: 456.7}
+  @update_attrs %{
+    name: "some updated name",
+    description: "some updated description",
+    price: 456.7
+  }
   @invalid_attrs %{name: nil, description: nil, price: nil}
   defp create_product(_) do
     product = product_fixture()
@@ -17,9 +23,15 @@ defmodule HelloWorldWeb.ProductLiveTest do
     setup [:create_product]
 
     test "lists all products", %{conn: conn, product: product} do
+      # This works:
+      # expect(Date, :utc_today, [mode: :shared, exactly: 2], fn -> ~D[2023-04-06] end)
+
+      # This does not works:
+      expect(Date, :utc_today, [exactly: 2], fn -> ~D[2023-04-06] end)
+
       {:ok, _index_live, html} = live(conn, ~p"/products")
 
-      assert html =~ "Listing Products"
+      assert html =~ "Listing Products 2023-04-06"
       assert html =~ product.name
     end
 

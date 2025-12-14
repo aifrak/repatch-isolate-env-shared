@@ -8,7 +8,7 @@ defmodule HelloWorldWeb.ProductLive.Index do
     ~H"""
     <Layouts.app flash={@flash}>
       <.header>
-        Listing Products
+        Listing Products {Date.utc_today()}
         <:actions>
           <.button variant="primary" navigate={~p"/products/new"}>
             <.icon name="hero-plus" /> New Product
